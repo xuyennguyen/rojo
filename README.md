@@ -103,7 +103,7 @@ The binraries produced from compiling this library follow the same pattern(s).
 
 ### The "name" of the Binary
 
-The "name" of the binary is either defined by the module (e.g. `graphics` for the Graphics Module), or by the test-case or example name (e.g. `)
+The "name" of the binary is either defined by the module (e.g. `graphics` for the Graphics Module), or by the test-case or example name (e.g. `example_Teapot`)
 
 ### Binary Prefixes
 
@@ -123,9 +123,9 @@ All binaries have one prefix, followed by an underscore (`_`). This prefix is de
 
 | Suffix | Explanation |
 |:-------|:------------|
-| _d     | A binary compiled with debug symbols, and is un-optimized (unless you decide to optimze the binary via `CMAKE_CXX_FLAGS`) |
-| _s     | A binary that is statically compiled. |
-| _d_s   | A binary that has debug symbols and is statically compiled. |
+| `_d`     | A binary compiled with debug symbols, and is un-optimized (unless you decide to optimze the binary via `CMAKE_CXX_FLAGS`) |
+| `_s`     | A binary that is statically compiled. |
+| `_d_s`  | A binary that has debug symbols and is statically compiled. |
 
 ## Modules
 

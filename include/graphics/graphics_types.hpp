@@ -9,7 +9,6 @@ namespace rojo
     {
         blending,
         scissor_test,
-        //stencil_test,
         depth_test,
         texture_mapping,
 

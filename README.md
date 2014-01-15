@@ -154,7 +154,7 @@ At the current moment, the math library is just GLM, as it has not been implemen
 
 ### Dependices
 
-- rojo_math (rojo's Math Module)
+- rojo's Math Module
 
 ### API
 
@@ -162,7 +162,7 @@ The API is composed of simple building blocks in order for other libraries/modul
 
 #### Graphics Backend
 
-In order to actually use the graphics module for pratical purposes, you require to have a graphics backend implemented and obviously link towards it. You can either create your own or use a pre-existing one (all pre-made backends are within the `rojo/backends/` directory). The currently avaliable backends are listed below:
+In order to actually use the graphics module for pratical purposes, you require to have a graphics backend implemented and obviously link towards it. You can either create your own or use a pre-existing one (all pre-made backends are within the `rojo/graphics/backends/` directory). The currently avaliable backends are listed below:
 
 | Backend | Description|
 |:--------|:-----------|

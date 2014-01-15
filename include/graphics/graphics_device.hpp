@@ -20,7 +20,6 @@ namespace rojo
         
         typedef GraphicsBackend graphics_backend;
 
-        // resources
         typedef texture_resource<GraphicBackend> texture;
         typedef shader_resource<GraphicsBackend> shader;
         typedef program_resource<GraphicsBackend> program;
@@ -54,7 +53,7 @@ namespace rojo
         /// determines whether the feature is enabled
         /// \param f the feture you wish to check
         /// \return true if the feature is enabled, false otherwise
-        bool is_enabled(feature f);
+        bool is_enabled(feature f) const;
 
         /// sets the scissor rect
         /// \param r The scissor rect
@@ -65,20 +64,44 @@ namespace rojo
         /// \return the scissor rect
         const rect& scissor() const;
 
+        /// sets the blend function to be used for blending
+        /// \param fn The function you wish to use
+        /// \note This sets the factors used by the blend equation
+        /// \see blend_equation To set/get the blend equation
+        void blend_function(const blend::function& fn);
+
+        /// \return the blend function this graphics device is using for blending
+        const blend::function& blend_function() const;
+
         /// sets the blend equation to be used for blending
         /// \param equation The blend equation you wish to set it to
-        /// \note If blending is disabled 
-        void blend_equation(const blend_equation& equation);
+        /// \note By defualt, the blend equation is blend::equation::add, as this
+        ///       is the most commonly used value.
+        /// \see blend_function To get/set the blend function
+        void blend_equation(const blend::equation& equation);
 
         /// \return the blend equation this graphics device is using for blending
-        const blend_equation& blend_equation() const; 
+        const blend::equation& blend_equation() const; 
+
+        /// sets the blend object used by this graphics device
+        /// \param blend What you wish to set it to
+        void blend(const blend& blend);
+      
+        /// \return the blend object used by this graphics device
+        const blend& blend() const;
 
     private:
-        
-        blend_equation m_blend_equation;
 
+        /// Describes the enabled features
+        std::array<bool, feature::count> m_features; 
+
+        /// Used to describe how blending is done
+        blend m_blend;
+
+        /// The rect that describes the scissor rect
         rect m_scissor_rect;
 
+        /// The backend used by the device
         graphics_backend m_backend;
     };
 }

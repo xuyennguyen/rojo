@@ -9,32 +9,51 @@ namespace rojo
     {
         blending,
         scissor_test,
-        stencil_test,
+        //stencil_test,
         depth_test,
-        texture_mapping
+        texture_mapping,
+
+        count
     };
 
-
-    struct blend_equation
+    struct blend
     {
-        
-    };
+        enum class factor
+        {
+            zero,
+            one,
+            src_colour,
+            inv_src_colour,
+            src_alpha,
+            inv_src_alpha,
+            dst_colour,
+            inv_dst_colour,
+            dst_alpha,
+            inv_dst_alpha,
+            constant_colour,
+            inv_constant_colour,
+            constant_alpha,
+            inv_constant_alpha
+        };
 
-    /*
-    enum class blend_equation
-    {
-        add,
-        subtract,
-        reverse_subtract,
-        min,
-        max
-    };
+        struct function
+        {
+            factor src;
+            factor dst;
+        };
 
-    enum class blend_function
-    {
+        enum class equation
+        {
+            add,
+            subtract,
+            reverse_subtract,
+            min,
+            max
+        };
 
+        function fn;
+        equation equation;
     };
-    */
 }
 
 #endif // __ROJO_GRAPHICSTYPES_HPP__

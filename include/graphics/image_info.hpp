@@ -10,7 +10,8 @@ namespace rojo
     struct image_info
     {
         // TODO: add different formats for colours?
-        typedef std::unique_ptr<colour4[]> pixel_array;
+        typedef colour4 pixel;
+        typedef std::unique_ptr<pixel[]> pixel_array;
 
         pixel_array pixels;
         unsigned width, height, bpp;

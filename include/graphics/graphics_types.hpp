@@ -1,5 +1,5 @@
-#ifndef __ROJO_GRAPHICSTYPES_HPP__
-#define __ROJO_GRAPHICSTYPES_HPP__
+#ifndef ROJO_GRAPHICS_GRAPHICSTYPES_HPP
+#define ROJO_GRAPHICS_GRAPHICSTYPES_HPP
 
 #include <rojo/math/types.hpp>
 
@@ -55,4 +55,4 @@ namespace rojo
     };
 }
 
-#endif // __ROJO_GRAPHICSTYPES_HPP__
+#endif // ROJO_GRAPHICS_GRAPHICSTYPES_HPP

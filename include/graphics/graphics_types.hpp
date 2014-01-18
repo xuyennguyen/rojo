@@ -3,13 +3,15 @@
 
 #include <rojo/math/types.hpp>
 
+#include <rojo/graphics/view.hpp>
+
 namespace rojo
 {
     enum class feature
     {
+        depth_test,
         blending,
         scissor_test,
-        depth_test,
         texture_mapping,
 
         count
@@ -53,6 +55,20 @@ namespace rojo
         function fn;
         equation equation;
     };
+
+
+    struct clear_flag
+    {
+        enum
+        {
+            colour = 1 << 1,
+            depth = 1 << 2,
+
+            all = colour | depth
+        };
+    };
+
+    typedef unsigned clear_flags;
 }
 
 #endif // ROJO_GRAPHICS_GRAPHICSTYPES_HPP

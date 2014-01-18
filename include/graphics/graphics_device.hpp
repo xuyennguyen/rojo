@@ -37,8 +37,6 @@ namespace rojo
             enable(feature::blending, true);
             enable(feature::scissor_test, false);
             enable(feature::texture_mapping, true);
-
-            view(default_view); 
         }
 
         template <class... Args>

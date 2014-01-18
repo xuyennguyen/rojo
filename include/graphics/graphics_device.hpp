@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-#include <rojo/graphics/graphics_types.hpp>
+#include <rojo/graphics/types.hpp>
 
 #include <rojo/graphics/resource/texture_resource.hpp>
 #include <rojo/graphics/resource/shader_resource.hpp>

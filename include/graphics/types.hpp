@@ -1,5 +1,5 @@
-#ifndef ROJO_GRAPHICS_GRAPHICSTYPES_HPP
-#define ROJO_GRAPHICS_GRAPHICSTYPES_HPP
+#ifndef ROJO_GRAPHICS_TYPES_HPP
+#define ROJO_GRAPHICS_TYPES_HPP
 
 #include <rojo/math/types.hpp>
 

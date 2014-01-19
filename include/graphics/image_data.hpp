@@ -1,13 +1,13 @@
-#ifndef ROJO_GRAPHICS_IMAGE_INFO_HPP
-#define ROJO_GRAPHICS_IMAGE_INFO_HPP
+#ifndef ROJO_GRAPHICS_IMAGE_DATA_HPP
+#define ROJO_GRAPHICS_IMAGE_DATA_HPP
 
 #include <memory>
 
-#include <rojo/graphics/graphic_types.hpp>
+#include <rojo/graphics/types.hpp>
 
 namespace rojo
 {
-    struct image_info
+    struct image_data
     {
         // TODO: add different formats for colours?
         typedef colour4 pixel;
@@ -18,4 +18,4 @@ namespace rojo
     };
 }
 
-#endif // ROJO_GRAPHICS_IMAGE_INFO_HPP
+#endif // ROJO_GRAPHICS_IMAGE_DATA_HPP

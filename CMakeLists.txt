@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project (rojo)
 
-set(ROJO_LIBRARY_NAME "ROJO")
+set(ROJO_LIBRARY_NAME "rojo")
 set(ROJO_VERSION_MAJOR 0)
 set(ROJO_VERSION_MINOR 1)
 set(ROJO_VERSION_PATCH 0)
@@ -47,7 +47,7 @@ set(BUILD_TESTS false CACHE BOOL "Enable to build test for ROJO")
 set(BUILD_SHARED_LIBS true CACHE BOOL "A flag to build shared (dynamic) libs")
 
 # set up the configure file for the library
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ROJO/config.hpp.inl ${CMAKE_CURRENT_SOURCE_DIR}/include/ROJO/config.hpp)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ROJO/config.hpp.inl ${CMAKE_CURRENT_SOURCE_DIR}/include/ROJO/config.hpp)
 
 # Add include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)

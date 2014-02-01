@@ -29,6 +29,7 @@ namespace rojo
 
 
     // TODO: mipmap support
+    // and documentation
     template <class GraphicsBackend>
     class texture_resource
     {

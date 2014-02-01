@@ -1,5 +1,9 @@
 # rojo
 
+> ## **NOTE:**
+> 
+> rojo is still under heavy development, and cannot be used for production code.
+
 A cross-platform C++11 library that helps creating games and other graphical applications easier to write within C++. 
 
 The main reason that this library is being created is for educational purposes.

@@ -5,27 +5,32 @@
 
 namespace rojo
 {
-    template <class GraphicsBackend, class T>
-    struct uniform 
+    template <class GraphicsBackend>
+    class program_resource;
+
+    template <class Program, class T>
+    class uniform 
     { 
     public:
 
-        typedef GraphicsBackend graphics_backend;
+
+        typedef Program program;
+        typedef typename program::graphics_backend graphics_backend;
         typedef typename graphics_backend::uniform_handle_type handle;
 
-        uniform(graphics_backend& backend)
-            : m_backend{backend}
+        uniform(program& program, handle& handle)
+            : m_program{program}, m_handle{handle}
         {
         }
 
         graphics_backend& backend() const
-        { return m_backend; }
+        { return program.backend(); }
 
         const handle& handle() const
         { return m_handle; }
 
         bool valid() const
-        { return m_valid; }
+        { return backend().valid(m_backend); }
 
         inline operator bool() const
         { return valid(); }
@@ -36,7 +41,7 @@ namespace rojo
         void value(const T& val)
         {
             m_value = val;
-            backend().uniform_value(m_handle, val);
+            backend().uniform(program().handle(), m_handle, reinterperet_cast<void*>(&val), sizeof(val));
         }
 
         uniform& operator=(const T& val)
@@ -45,17 +50,16 @@ namespace rojo
             return *this;
         }
 
+        program& program() const
+        { return m_program; }
+
     private:
 
-        bool m_valid;
+        program& m_program;
 
         handle m_handle;
 
         T m_value;
-
-        graphics_backend& m_backend;
-
-        friend graphics_backend;
     };
 
     // todo
@@ -111,7 +115,9 @@ namespace rojo
 
         template <typename T>
         uniform<T> uniform(const std::string& name) const
-        { return backend().uniform<T>(m_handle, name); }
+        { 
+            return uniform<T>{m_handle, backend().uniform_handle(name)};
+        }
 
         // todo:
         // uniform and attributes

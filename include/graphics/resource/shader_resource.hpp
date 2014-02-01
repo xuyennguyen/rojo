@@ -13,7 +13,7 @@ namespace rojo
         fragment
     };
 
-    template <class GraphicsBackend, shader_type ShaderType>
+    template <class GraphicsBackend>
     class shader_resource
     {
     public:
@@ -22,17 +22,22 @@ namespace rojo
         typedef typename graphics_backend::shader_handle_type handle;
 
         shader_resource(graphics_backend& backend)
-            : m_backend(backend)
+            : m_backend{backend}, m_type{shader_type::vertex}
         {
         }
 
-        shader_resource(graphics_backend& backend, const std::string& source)
-            : m_backend(backend), m_source(source)
+        shader_resource(graphics_backend& backend, const shader_type& type)
+            : m_backend{backend}, m_type{type}
         {
         }
 
-        shader_resource(graphics_backend& backend, const std::istream& stream)
-            : m_backend(backend), m_source(std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>())
+        shader_resource(graphics_backend& backend, const shader_type& type, const std::string& source)
+            : m_backend{backend}, m_type{type}, m_source{source}
+        {
+        }
+
+        shader_resource(graphics_backend& backend, const shader_type& type, const std::istream& stream)
+            : m_backend{backend}, m_type{type} m_source{std::istreambuf_iterator<char>(stream), std::istreambuf_iterator<char>()}
         {
         }
 
@@ -64,8 +69,13 @@ namespace rojo
         graphics_backend& backend() const
         { return m_backend; }
 
-        constexpr shader_type type() const
-        { return ShaderType; }
+        /// \note this function only has effect on
+        /// prior calls to compile()
+        void type(const shader_type& type)
+        { m_type = type; }
+
+        const shader_type& type() const
+        { return m_type; }
 
         const handle& handle() const
         { return m_handle; }
@@ -84,12 +94,6 @@ namespace rojo
 
         graphics_backend& m_backend;
     };
-
-    template <class GraphicsBackend>
-    using fragment_shader_resource = shader<GraphicsBackend, shader_type::fragment>;
-
-    template <class GraphicsBackend>
-    using vertex_shader_resource = shader<GraphicsBackend, shader_type::vertex>;
 }
 
 #endif // ROJO_GRAPHICS_SHADER_RESOURCE_HPP

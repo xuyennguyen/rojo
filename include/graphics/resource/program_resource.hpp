@@ -16,9 +16,10 @@ namespace rojo
         typedef GraphicsBackend graphics_backend;
         typedef typename graphics_backend::program_handle_type handle;
         
+        typedef shader_resource<graphics_backend> shader;
 
         program_resource(graphics_backend& backend)
-            : m_backend(backend)
+            : m_backend{backend}
         {
         }
 
@@ -35,9 +36,8 @@ namespace rojo
             }
         }
 
-        template <shader_type ShaderType>
-        void attach_shader(const shader_resource<graphics_backend, ShaderType>& shader)
-        { backend().attach_shader(m_handle, shader.type(), shader.handle()); }
+        void attach_shader(const shader& sh)
+        { backend().attach_shader(m_handle, sh.type(), sh.handle()); }
 
         bool link()
         { return backend().link(m_handle); }

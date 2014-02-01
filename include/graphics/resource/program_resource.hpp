@@ -120,7 +120,7 @@ namespace rojo
         }
 
         // todo:
-        // uniform and attributes
+        // attributes
 
     private:
 

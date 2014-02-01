@@ -36,30 +36,33 @@ namespace rojo
 
         // texture
         void destroy(const texture_handle_type&) { unimplemented(); }
+        bool valid(const texture_handle_type&) { unimplemented(); return false; }
         void upload(texture_handle_type&, const image_data&) { unimplemented(); }
         void wrap(texture_handle_type&, const texture_wrap&) { unimplemented(); }
         void filter(texture_handle_type&, const texture_filter&) { unimplemented(); }
         image_data data(const texture_handle_type&) { unimplemented(); return {}; }
-        bool valid(const texture_handle_type&) { unimplemented(); return false; }
 
         // shader
         void destroy(const shader_handle_type&) { unimplemented(); }
-        bool compile(shader_handle_type&, const shader_type&, const std::string& source) { unimplemented(); return false; } 
         bool valid(const shader_handle_type&) { unimplemented(); return false;
+        bool compile(shader_handle_type&, const shader_type&, const std::string& source) { unimplemented(); return false; } 
 
         // program
         void destroy(const program_handle_type&) { unimplemented(); }
+        bool valid(const program_handle_type&) { unimplemented(); return false; }
+        bool valid(const uniform_handle_type&) { unimplemented(); return false; }
         void attach_shader(program_handle_type&, const shader_type&, const shader_handle_type&) { unimplementated(); return false; } 
         bool link(program_handle_type&) { unimplementated(); return false; }
         uniform_handle_type& uniform_handle(const std::string& name) { unimplementated(); return {}; }
         void uniform(program_handle_type&, uniform_handle_type&, const void* data, const unsigned size) { unimplemented(); }
-        bool valid(const program_handle_type&) { unimplemented(); return false; }
-        bool valid(const uniform_handle_type&) { unimplemented(); return false; }
 
         // vertex_buffer
-
+        void destroy(const vertex_buffer_handle_type&) { unimplemented(); }
+        bool valid(const vertex_buffer_handle_type&) { unimplemented(); return false; }
 
         // index_buffer
+        void destroy(const index_buffer_handle_type&) { unimplemented(); }
+        bool valid(const index_buffer_handle_type&) { unimplemented(); return false; }
 
         
 

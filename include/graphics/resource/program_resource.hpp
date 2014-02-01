@@ -36,7 +36,7 @@ namespace rojo
             }
         }
 
-        void attach_shader(const shader& sh)
+        void attach(const shader& sh)
         { backend().attach_shader(m_handle, sh.type(), sh.handle()); }
 
         bool link()

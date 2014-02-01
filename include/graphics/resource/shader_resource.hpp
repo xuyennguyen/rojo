@@ -48,7 +48,7 @@ namespace rojo
 
         void destroy()
         {
-            if(vailid)
+            if(vailid())
             {
                 backend().destroy(m_handle);
             }

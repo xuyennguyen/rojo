@@ -30,6 +30,7 @@ A cross-platform C++11 library that helps creating games and other graphical app
 			<a href="#dependices-1">Dependencies</a>
 			<a href="#API">API</a>
 				<a href="#graphics-backend">Graphics Backend</a>
+					<a href="#creating-your-own-graphics-backend">Creating your own Graphics Backend</a>
 				<a href="#graphics-device">Graphics Device</a>
 				<a href="#resources">Resources</a>
 			<a href="#2d">2D</a>
@@ -183,11 +184,14 @@ In order to actually use the graphics module for pratical purposes, you require 
 
 | Backend | Description|
 |:--------|:-----------|
-| ogl_backend | An OpenGL backend |
+| ogl3_backend | An OpenGL 3.x backend |
 
+##### Creating your own Graphics Backend
 
-Please see the documentation if you wish to create your own graphics backend.
- 
+If you wish to create your own graphics backend, then it is reccomended that you inherit from `base_backend` within `rojo/graphics/backends/base_backend.hpp`. As the base backend supplies your typedef's for you and provides you with functions that you must override* (those that are unimplemented, marked as `{ unimplemented(); /* ... */ }`). If you wish to see all the functions you must override* then it is reccomended that you view the header-file yourself and the documentation.
+
+*By override I mean simply hide via inheritance
+
 #### Graphics Device
 
 Once you have a backend ready to use (linked to your binary) you may use it via a graphics device. A graphics device provides an abstract interface over all backends that could be used. The main reason a graphics device exists is to abstract all the lower-level API-specific details out of the picture. 
@@ -221,7 +225,7 @@ You might be thinking:
 > texture_resource<ogl3_backend> texture = device.createTexture();
 > ```
 
-Well not necessarily, for one, since this library is a C++11 library you can simply use the `auto` keyword to create a resource (by using your `graphics_device` to create your resource object). e.g.
+Well this is not necessarily, for one, since this library is a C++11 library you can simply use the `auto` keyword to create a resource (by using your `graphics_device` to create your resource object). e.g.
 
 ```c++
 auto texture = device.createTexture();

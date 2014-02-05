@@ -8,34 +8,34 @@ A cross-platform C++11 library that helps creating games and other graphical app
 
 # Table of Contents
 
-```
-1. <a href="#design-goals">Design Goals</a>
-2. <a href="#getting-started">Getting Started</a>
-	* <a href="#downloading-the-library">Downloading the Library</a>
-	* <a href="#supported-platforms">Supported Platforms</a>
-		* <a href="#platforms">Platforms</a>
-		* <a href="#supported-rendering-backends">Supported Rendering Backends</a>
-	* <a href="#dependencies">Dependencies</a>
-	* <a href="#installation">Installation</a>
-3. <a href="#using-the-library">Using the Library</a>
-	* <a href="#concepts">Concepts</a>
-	* <a href="#naming-conventions">Naming conventions</a>
-	* <a href="#binary-naming-conventions">Binary naming conventions</a>
-		* <a href="#the-name-of-the-binary">The "name" of the Binary</a>
-		* <a href="#binary-prefixes">Binary Prefixes</a>
-		* <a href="#binary-suffixes">Binary Suffixes</a>
-	* <a href="#modules">Modules</a>
-		* <a href="#math">Math</a>
-		* <a href="#graphics">Graphics</a>
-			* <a href="#dependices-1">Dependencies</a>
-			* <a href="#API">API</a>
-				* <a href="#graphics-backend">Graphics Backend</a>
-				* <a href="#graphics-device">Graphics Device</a>
-				* <a href="#resources">Resources</a>
-			* <a href="#2d">2D</a>
-			* <a href="#3d">3D</a>
-		* <a href="#audio">Audio</a>
-```
+<pre>
+<a href="#design-goals">Design Goals</a>
+<a href="#getting-started">Getting Started</a>
+	<a href="#downloading-the-library">Downloading the Library</a>
+	<a href="#supported-platforms">Supported Platforms</a>
+		<a href="#platforms">Platforms</a>
+		<a href="#supported-rendering-backends">Supported Rendering Backends</a>
+	<a href="#dependencies">Dependencies</a>
+	<a href="#installation">Installation</a>
+<a href="#using-the-library">Using the Library</a>
+	<a href="#concepts">Concepts</a>
+	<a href="#naming-conventions">Naming conventions</a>
+	<a href="#binary-naming-conventions">Binary naming conventions</a>
+		<a href="#the-name-of-the-binary">The "name" of the Binary</a>
+		<a href="#binary-prefixes">Binary Prefixes</a>
+		<a href="#binary-suffixes">Binary Suffixes</a>
+	<a href="#modules">Modules</a>
+		<a href="#math">Math</a>
+		<a href="#graphics">Graphics</a>
+			<a href="#dependices-1">Dependencies</a>
+			<a href="#API">API</a>
+				<a href="#graphics-backend">Graphics Backend</a>
+				<a href="#graphics-device">Graphics Device</a>
+				<a href="#resources">Resources</a>
+			<a href="#2d">2D</a>
+			<a href="#3d">3D</a>
+		<a href="#audio">Audio</a>
+</pre>
 
 # Design Goals
 

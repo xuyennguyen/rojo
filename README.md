@@ -213,10 +213,12 @@ You might be thinking:
 >That's great and all, but now I have a lot more typing to do, for example:
 
 > ```c++
-> typedef graphics_device<ogl_backend> my_device;
+> typedef graphics_device<ogl3_backend> my_device;
 > 
 > my_device device;
-> texture_resource<ogl_backend> texture = device.createTexture(); // this is quite long
+>
+> // this is quite a long line just to create a texture
+> texture_resource<ogl3_backend> texture = device.createTexture();
 > ```
 
 Well not necessarily, for one, since this library is a C++11 library you can simply use the `auto` keyword to create a resource (by using your `graphics_device` to create your resource object). e.g.

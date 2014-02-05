@@ -4,52 +4,62 @@
 > 
 > rojo is still under heavy development, and cannot be used for production code.
 
-A cross-platform C++11 library that helps creating games and other graphical applications easier to write within C++. 
-
-The main reason that this library is being created is for educational purposes.
+A cross-platform C++11 library that helps creating games and other graphical applications easier to write within C++.
 
 # Table of Contents
 
-1. Design Goals
-2. Dependices
-3. Supported Platforms
-	- Platforms
-	- Supported Rendering Backends
-4. Getting Started
-	- Downloading the Library
-	- Dependencies
-	- Installation
-5. Using the Library
-	- Modules
-		- Math
-		- Graphics
-			- Dependencies
-			- API
-			- 2D
-			- 3D
-		- Audio
-			- Dependencies
-			- API
-			- 2D
-			- 3D
+```
+1. <a href="#design-goals">Design Goals</a>
+2. <a href="#getting-started">Getting Started</a>
+	* <a href="#downloading-the-library">Downloading the Library</a>
+	* <a href="#supported-platforms">Supported Platforms</a>
+		* <a href="#platforms">Platforms</a>
+		* <a href="#supported-rendering-backends">Supported Rendering Backends</a>
+	* <a href="#dependencies">Dependencies</a>
+	* <a href="#installation">Installation</a>
+3. <a href="#using-the-library">Using the Library</a>
+	* <a href="#concepts">Concepts</a>
+	* <a href="#naming-conventions">Naming conventions</a>
+	* <a href="#binary-naming-conventions">Binary naming conventions</a>
+		* <a href="#the-name-of-the-binary">The "name" of the Binary</a>
+		* <a href="#binary-prefixes">Binary Prefixes</a>
+		* <a href="#binary-suffixes">Binary Suffixes</a>
+	* <a href="#modules">Modules</a>
+		* <a href="#math">Math</a>
+		* <a href="#graphics">Graphics</a>
+			* <a href="#dependices-1">Dependencies</a>
+			* <a href="#API">API</a>
+				* <a href="#graphics-backend">Graphics Backend</a>
+				* <a href="#graphics-device">Graphics Device</a>
+				* <a href="#resources">Resources</a>
+			* <a href="#2d">2D</a>
+			* <a href="#3d">3D</a>
+		* <a href="#audio">Audio</a>
+```
 
 # Design Goals
 
-- Simple and yet easy to use with C++
-- No unnecessary overhead; use of compile-time polymorphism wherever necessary*
-- Use of standard C++ design patterns, namely RAII
-- Use of new C++11 design patterns (e.g. moving over copying)
-- Use of the new C++11 standard library
+- **Extensibility**: rojo is extensible. Vanilla rojo doesn't require any OS-specific library and is made to be the most extensible library it possibly can be.
+- **Simplicity**: rojo drives on being the **simplest** it possibly can (to the user), whilst trying to fulfil the other design goals. It's API is kept **simple** and **straightfoward**.
+- **No unncessary overhead**: rojo uses compile-time polymorphism over run-time polymorphism wherever necessary*
+- **C++11**: This library uses C++11 features and the C++11 standard library in order to make this library simpler and more comprehensible to the user.
 
 *some people writing C++ code seem to mis-use virtual functions, especially when the implementation of something should not change during run-time.
 
-# Dependices
 
-In order to build this library, it is reccomended that you use CMake to do so. As I am using CMake as a build system. It is possible to not use CMake, but it will make your life much harder.
+# Getting Started
 
-# Supported Platforms
+## Downloading the Library
 
-## Platforms
+There are multiple ways to download the library. Here are your options:
+
+- [clone] the repo: `git clone https://github.com/miguelishawt/rojo.git`
+- Download the library ([zip]/[tar-gz])
+
+
+## Supported Platforms
+
+### Platforms
 
 The following platforms will be supported:
 
@@ -64,7 +74,7 @@ The following platforms will be supported:
 > to be supported, as I develop directly from OS X 10.9.
 
 
-## Supported Rendering Backends
+### Supported Rendering Backends
 
 - OpenGL 3.x
 
@@ -73,23 +83,26 @@ The following platforms will be supported:
 > 1. These are just the rendering backends that are supported out of the box. 
 > 2. DirectX (and possibly other APIs) may be supported in the future.
 
-# Getting Started
-
-## Downloading the Library
-
-There are multiple ways to download the library. Here are your options:
-
-- [clone] the repo: `git clone https://github.com/miguelishawt/rojo.git`
-- Download the library ([zip]/[tar-gz])
-
 ## Dependencies
+
+In order to build/use this library, it is reccomended that you use CMake to do so. As I am using CMake as a build system. It is possible to not use CMake, but it will make your life much harder.
 
 An updated compiler that supports C++11 features.
 
 ## Installation
 
-    mkdir build; cd build
-    ccmake ..
+The library is mainly header-only, due to the use of templates. However, there are some parts of the library that are required to be compiled. The binaries produced by the build process can be configured within CMake, and are designated by `ROJO_BUILD_<X>` variables.
+
+It is reccomended that you setup the build system like so:
+
+    mkdir build
+
+And then run CMake from the build directory, e.g.
+
+     cd build
+     ccmake ..
+
+From there you should setup your CMake configuration for however you wish to compile the library (e.g. installation path). Once configured, you can either manually install (e.g. `sudo make install`), or run the bash script `install.sh`. The install script will run change CMake's BUILD_TYPE variable (`CMAKE_BUILD_TYPE`) and the `BUILD_SHARED` variable, so that it builds both debug and release static and shared (dynamic) binaries.
     
 # Using The Library
 
@@ -179,9 +192,11 @@ Please see the documentation if you wish to create your own graphics backend.
 
 Once you have a backend ready to use (linked to your binary) you may use it via a graphics device. A graphics device provides an abstract interface over all backends that could be used. The main reason a graphics device exists is to abstract all the lower-level API-specific details out of the picture. 
 
+The `graphics_device` class basically act as a generic "wrapper", and is mainly used to create resources (see below).
+
 #### Resources
 
-A resource is a resource which is typically allocated on your GPU. Here is a list of all the avaliable resources that may be allocated from a graphics device.
+A "resource" is a resource which is allocated on your GPU. Here is a list of all the avaliable resources that may be allocated from a graphics device. 
 
 | Resource   | Description | 
 |:-----------|:-------------|
@@ -190,6 +205,37 @@ A resource is a resource which is typically allocated on your GPU. Here is a lis
 | index_buffer | Describes an index buffer |
 | shader       | Describes a shader |
 | program | Describes a shader program | 
+
+All resources require a backend, and within the rojo namespace you may notice that these resources are actually called `X_resource`, where `X` is the type of resource (see the table above). You may also notice that it has a template parameter, namely the backend that it is allocated with; as all resources require a graphics backend to communicate to your GPU. This is used to keep low-level details away from the main code and to make the library much more extensible. 
+
+You might be thinking:
+
+>That's great and all, but now I have a lot more typing to do, for example:
+
+> ```c++
+> typedef graphics_device<ogl_backend> my_device;
+> 
+> my_device device;
+> texture_resource<ogl_backend> texture = device.createTexture(); // this is quite long
+> ```
+
+Well not necessarily, for one, since this library is a C++11 library you can simply use the `auto` keyword to create a resource (by using your `graphics_device` to create your resource object). e.g.
+
+```c++
+auto texture = device.createTexture();
+``` 
+
+Of course this will not work for storing pointers/references to the resources. That is why there are typedef's associated within the `graphics_device` for each type of resource. The naming convention of these resource typedef's are the same within the table presented above (`texture`, `vertex_buffer`, etc.). e.g.
+
+```c++
+my_device::texture texture = device.createTexture();
+``` 
+
+These typedef's are also handy to generically create a resource, via the `create<T>(Args&&...)` method within `graphics_device`. For instance:
+
+```c++
+auto texture = device.create<my_device::texture>();
+```
 
 ### 2D Support
 

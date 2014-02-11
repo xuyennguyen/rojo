@@ -1,33 +1,11 @@
 #ifndef ROJO_GRAPHICS_TEXTURE_RESOURCE_HPP
 #define ROJO_GRAPHICS_TEXTURE_RESOURCE_HPP
 
+#include <rojo/graphics/types.hpp>
 #include <rojo/graphics/image_info.hpp>
 
 namespace rojo
 {
-    enum class texture_wrap
-    {
-        repeat,
-        inv_repeat,
-        clamp_to_edge,
-        clamp_to_border
-    };
-
-    enum class texture_filter
-    {
-        linear,
-        nearest
-        
-        /*
-            // http://www.opengl.org/sdk/docs/man/xhtml/glTexParameter.xml 
-
-         nearest_mipmap_nearest,
-         linear_mipmap_nearest,
-         linear_mipmap_linear
-         */
-    };
-
-
     // TODO: mipmap support
     // and documentation
     template <class GraphicsBackend>

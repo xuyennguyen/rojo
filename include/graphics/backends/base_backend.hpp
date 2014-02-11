@@ -5,12 +5,6 @@
 
 #include <rojo/graphics/types.hpp>
 
-#include <rojo/graphics/resource/texture_resource.hpp>
-#include <rojo/graphics/resource/shader_resource.hpp>
-#include <rojo/graphics/resource/program_resource.hpp>
-#include <rojo/graphics/resource/vertex_buffer_resource.hpp>
-#include <rojo/graphics/resource/index_buffer_resource.hpp>
-
 namespace rojo
 {
     template <class BackendTypes>
@@ -21,11 +15,10 @@ namespace rojo
         typedef BackendTypes backend_types;
 
         typedef typename backend_types::texture_handle_type texture_handle_type;
-        typedef typename backend_types::index_buffer_handle_type index_buffer_handle_type;
-        typedef typename backend_types::vertex_buffer_handle_type vertex_buffer_handle_type;
+        typedef typename backend_types::buffer_handle_type buffer_handle_type;
         typedef typename backend_types::shader_handle_type shader_handle_type;
         typedef typename backend_types::program_handle_type program_handle_type;
-        typedef typename backend_types::uniform_handle_type uniform_handle_type;
+        typedef typename backend_types::uniform_location_type uniform_location_type;
 
     protected:
         
@@ -41,6 +34,8 @@ namespace rojo
         void wrap(texture_handle_type&, const texture_wrap&) { unimplemented(); }
         void filter(texture_handle_type&, const texture_filter&) { unimplemented(); }
         image_data data(const texture_handle_type&) { unimplemented(); return {}; }
+        void bind(const texture_handle_type&) { unimplemented(); }
+        bool bound(const texture_handle_type&) const { unimplemented(); return false }
 
         // shader
         void destroy(const shader_handle_type&) { unimplemented(); }
@@ -50,21 +45,19 @@ namespace rojo
         // program
         void destroy(const program_handle_type&) { unimplemented(); }
         bool valid(const program_handle_type&) { unimplemented(); return false; }
-        bool valid(const uniform_handle_type&) { unimplemented(); return false; }
+        bool valid(const uniform_location_type&) { unimplemented(); return false; }
         void attach_shader(program_handle_type&, const shader_type&, const shader_handle_type&) { unimplementated(); return false; } 
         bool link(program_handle_type&) { unimplementated(); return false; }
-        uniform_handle_type& uniform_handle(const std::string& name) { unimplementated(); return {}; }
-        void uniform(program_handle_type&, uniform_handle_type&, const void* data, const unsigned size) { unimplemented(); }
+        uniform_location_type& uniform_location(const std::string& name) { unimplementated(); return {}; }
+        void uniform(program_handle_type&, uniform_location_type&, const void* data, const unsigned size) { unimplemented(); }
+        void use(program_handle_type&) { unimplemented(); }
 
-        // vertex_buffer
-        void destroy(const vertex_buffer_handle_type&) { unimplemented(); }
-        bool valid(const vertex_buffer_handle_type&) { unimplemented(); return false; }
 
-        // index_buffer
-        void destroy(const index_buffer_handle_type&) { unimplemented(); }
-        bool valid(const index_buffer_handle_type&) { unimplemented(); return false; }
-
-        
+        // buffer
+        void destroy(const buffer_handle_type&) { unimplemented(); }
+        bool valid(const buffer_handle_type&) { unimplemented(); return false; }
+        void data(buffer_handle_type&, void* data, std::size_t size, const buffer_usage& usage);
+        void sub_data(buffer_handle_type&, std::size_t offset, void* data, std::size_t size);
 
         // operations
         void enable(feature f, bool enable) { unimplemented(); }

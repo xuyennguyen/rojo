@@ -69,6 +69,51 @@ namespace rojo
     };
 
     typedef unsigned clear_flags;
+
+    enum class texture_wrap
+    {
+        repeat,
+        inv_repeat,
+        clamp_to_edge,
+        clamp_to_border
+    };
+
+    enum class texture_filter
+    {
+        linear,
+        nearest
+        
+        /*
+            // http://www.opengl.org/sdk/docs/man/xhtml/glTexParameter.xml 
+
+         nearest_mipmap_nearest,
+         linear_mipmap_nearest,
+         linear_mipmap_linear
+         */
+    };
+
+
+    enum class shader_type
+    {
+        vertex,
+        fragment
+    };
+
+    enum class buffer_type
+    {
+        array,
+        element_array
+    };
+
+    enum class buffer_usage
+    {
+        stream_draw,
+        stream_read,
+        static_draw,
+        static_read,
+        dynamic_draw,
+        dynamic_read
+    };
 }
 
 #endif // ROJO_GRAPHICS_GRAPHICSTYPES_HPP

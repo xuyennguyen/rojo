@@ -16,18 +16,19 @@ namespace rojo
 
         typedef Program program;
         typedef typename program::graphics_backend graphics_backend;
-        typedef typename graphics_backend::uniform_handle_type handle;
+        // todo: possibly rename this handle?
+        typedef typename graphics_backend::uniform_location_type location;
 
-        uniform(program& program, handle& handle)
-            : m_program{program}, m_handle{handle}
+        uniform(program& program, location& location)
+            : m_program{program}, m_location{location}
         {
         }
 
         graphics_backend& backend() const
         { return program.backend(); }
 
-        const handle& handle() const
-        { return m_handle; }
+        const location& location() const
+        { return m_location; }
 
         bool valid() const
         { return backend().valid(m_backend); }
@@ -57,7 +58,7 @@ namespace rojo
 
         program& m_program;
 
-        handle m_handle;
+        location m_location;
 
         T m_value;
     };
@@ -96,10 +97,20 @@ namespace rojo
         }
 
         void attach(const shader& sh)
-        { backend().attach_shader(m_handle, sh.type(), sh.handle()); }
-
+        { backend().attach_shader(m_handle, sh.type(), sh.handle()); } 
         bool link()
         { return backend().link(m_handle); }
+
+        /// \note Must be called before link
+        void bind_attribute(unsigned location, const std::string& name)
+        {
+            backend().bind_attribute(m_handle, location, name);
+        }
+        
+        void use()
+        {
+            backend().use(m_handle);
+        }
 
         graphics_backend& backend() const
         { return m_backend; }
@@ -116,11 +127,8 @@ namespace rojo
         template <typename T>
         uniform<T> uniform(const std::string& name) const
         { 
-            return uniform<T>{m_handle, backend().uniform_handle(name)};
+            return uniform<T>{m_handle, backend().uniform_location(name)};
         }
-
-        // todo:
-        // attributes
 
     private:
 

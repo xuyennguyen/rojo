@@ -5,14 +5,10 @@
 #include <istream>
 #include <iterator>
 
+#include <rojo/graphics/types.hpp>
+
 namespace rojo
 {
-    enum class shader_type
-    {
-        vertex,
-        fragment
-    };
-
     template <class GraphicsBackend>
     class shader_resource
     {

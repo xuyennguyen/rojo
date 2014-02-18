@@ -10,7 +10,7 @@ namespace rojo
     /// \tparam ImageLoader An image loader concept
     /// The ImageLoader concept requires these methods:
     /// - bool load(image_data&, const std::string& path)
-    /// - bool save(const image_data&, const std::string& path)
+    /// - bool save(const image_data&, const std::string& path) const
     template <class ImageLoader = detail::default_image_loader>
     class image
     {
@@ -56,7 +56,7 @@ namespace rojo
         image& operator=(image&&) = default;
 
         bool load(const std::string& path) { return m_loader.load(m_data, path); }
-        bool save(const std::string& path) { return m_loader.save(m_data, path); }
+        bool save(const std::string& path) const { return m_loader.save(m_data, path); }
 
         pixel& pixel(const std::size_t index) { return m_data.pixel[index]; }
         const pixel& pixel(const std::size_t index) const { return m_data.pixels[index]; }

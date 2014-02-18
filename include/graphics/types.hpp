@@ -82,16 +82,13 @@ namespace rojo
     {
         linear,
         nearest
-        
         /*
             // http://www.opengl.org/sdk/docs/man/xhtml/glTexParameter.xml 
-
          nearest_mipmap_nearest,
          linear_mipmap_nearest,
          linear_mipmap_linear
          */
     };
-
 
     enum class shader_type
     {

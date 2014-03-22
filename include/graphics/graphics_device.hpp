@@ -8,8 +8,7 @@
 #include <rojo/graphics/resource/texture_resource.hpp>
 #include <rojo/graphics/resource/shader_resource.hpp>
 #include <rojo/graphics/resource/program_resource.hpp>
-#include <rojo/graphics/resource/vertex_buffer_resource.hpp>
-#include <rojo/graphics/resource/index_buffer_resource.hpp>
+#include <rojo/graphics/resource/buffer.hpp>
 
 namespace rojo
 {
@@ -25,9 +24,9 @@ namespace rojo
         typedef texture_resource<GraphicBackend> texture;
         typedef shader_resource<GraphicsBackend> shader;
         typedef program_resource<GraphicsBackend> program;
-        typedef vertex_buffer_resource<GraphicsBackend> vertex_buffer;
-        typedef index_buffer_resource<GraphicsBackend> index_buffer;
-
+        template <class T, buffer_type BufferType> using buffer = buffer_resource<T, BufferType, GraphicsBackend>;
+        template <class Vertex> using vertex_buffer = buffer<Vertex, buffer_type::array>;
+        typedef buffer<unsigned int, buffer_type::element_array> index_buffer;
         
         /// Initializes the graphics device with
         /// it's default settings
@@ -41,27 +40,31 @@ namespace rojo
 
         template <class... Args>
         texture create_texture(Args&&... args)
-        { return texture{m_backend, args...}; }
+        { return create<texture>(args...); }
         
         template <class... Args>
         shader create_shader(Args&&... args)
-        { return shader{m_backend, args...} }
+        { return create<shader>(args...); }
 
         template <class... Args>
         program create_program(Args&&... args)
-        { return program{m_backend, args...} }
+        { return create<program>(args...); }
 
-        template <class... Args>
-        vertex_buffer create_vertex_buffer(Args&&... args)
-        { return vertex_buffer{m_backend, args...} }
+        template <class T, buffer_type BufferType, class... Args>
+        buffer<T, BufferType> create_buffer(Args&&... args)
+        { return create<buffer<T, BufferType>(args...); }
+
+        template <class Vertex, class... Args>
+        vertex_buffer<Vertex> create_vertex_buffer(Args&&... args)
+        { return create<vertex_buffer<Vertex>(args...); }
 
         template <class... Args>
         index_buffer create_index_buffer(Args&&... args) 
-        { return index_buffer{m_backend, args...} }
+        { return create<index_buffer>(args...); }
 
         template <class Resource, class... Args>
         Resource create(Args&&... args)
-        { return Resource{m_backend, args...} }
+        { return Resource{m_backend, std::forward(args)...} }
 
         /// enables a feature
         /// \param f the feature you wish to enable (or disable)

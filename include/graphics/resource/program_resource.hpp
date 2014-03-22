@@ -3,69 +3,11 @@
 
 #include <rojo/graphics/resource/shader.hpp>
 
+#include <rojo/graphics/resource/detail/uniform.hpp>
+//#include <rojo/graphics/resource/detail/attribute.hpp>
+
 namespace rojo
 {
-    template <class GraphicsBackend>
-    class program_resource;
-
-    template <class Program, class T>
-    class uniform 
-    { 
-    public:
-
-
-        typedef Program program;
-        typedef typename program::graphics_backend graphics_backend;
-        // todo: possibly rename this handle?
-        typedef typename graphics_backend::uniform_location_type location;
-
-        uniform(program& program, location& location)
-            : m_program{program}, m_location{location}
-        {
-        }
-
-        graphics_backend& backend() const
-        { return program.backend(); }
-
-        const location& location() const
-        { return m_location; }
-
-        bool valid() const
-        { return backend().valid(m_backend); }
-
-        inline operator bool() const
-        { return valid(); }
-
-        const T& value() const
-        { return m_value; }
-
-        void value(const T& val)
-        {
-            m_value = val;
-            backend().uniform(program().handle(), m_handle, reinterperet_cast<void*>(&val), sizeof(val));
-        }
-
-        uniform& operator=(const T& val)
-        { 
-            value(val);
-            return *this;
-        }
-
-        program& program() const
-        { return m_program; }
-
-    private:
-
-        program& m_program;
-
-        location m_location;
-
-        T m_value;
-    };
-
-    // todo
-    typedef unsigned attribute;
-
     template <class GraphicsBackend>
     class program_resource
     {
@@ -102,7 +44,7 @@ namespace rojo
         { return backend().link(m_handle); }
 
         /// \note Must be called before link
-        void bind_attribute(unsigned location, const std::string& name)
+        void bind_attribute(std::size_t location, const std::string& name)
         {
             backend().bind_attribute(m_handle, location, name);
         }
@@ -126,9 +68,7 @@ namespace rojo
 
         template <typename T>
         uniform<T> uniform(const std::string& name) const
-        { 
-            return uniform<T>{m_handle, backend().uniform_location(name)};
-        }
+        { return uniform<T>{m_handle, backend().uniform_location(name)}; }
 
     private:
 

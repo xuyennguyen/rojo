@@ -17,12 +17,12 @@ namespace rojo
         typedef typename graphics_backend::texture_handle_type handle;
 
         texture_resource(graphics_backend& backend)
-            : m_backend{backend}, m_src_width{0}, m_src_height{0}
+            : m_backend{backend}, m_src_width{0}, m_src_height{0}, m_filter{texture_filter::linear}, m_wrap{texture_wrap::repeat}
         {
         }
 
         texture_resource(graphics_backend& backend, const image_data& data)
-            : m_backend{backend}, m_src_width{0}, m_src_height{0}
+            : m_backend{backend}, m_src_width{0}, m_src_height{0}, m_filter{texture_filter::linear}, m_wrap{texture_wrap::repeat}
         {
             upload(data);
         }

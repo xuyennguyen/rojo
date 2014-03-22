@@ -43,6 +43,7 @@ namespace rojo
             }
         }
 
+        /// \note validates the buffer
         void data(const T* ptr, std::size_t count, const buffer_usage& usage)
         { usage(usage); data(ptr, count); }
         void data(const T* ptr, std::size_t count)
@@ -71,19 +72,16 @@ namespace rojo
             return {backend().data(m_handle)};
         }
 
+        /// \note Assumes data has been previously uploaded
         void sub_data(std::size_t offset, const T* ptr, std::size_t count)
-        {
-            backend().sub_data(m_handle, offset, reinterpret_cast<void*>(ptr), count);
-        }
+        { assert(valid() && "Buffer is not valid"); backend().sub_data(m_handle, offset, reinterpret_cast<void*>(ptr), count); }
 
         void sub_data(std::size_t offset, const std::vector<T>& vec)
-        {
-            sub_data(offset, &vec[0], vec.size());
-        }
+        { assert(valid() && "Buffer is not valid"); sub_data(offset, &vec[0], vec.size()); }
 
         template <std::size_t size>
         void sub_data(std::size_t offset, std::array<T, size> arr) 
-        { sub_data(offset, &arr[0], arr.size()); }
+        { sassert(valid() && "Buffer is not valid"); sub_data(offset, &arr[0], arr.size()); }
     
         graphics_backend& backend() const
         { return m_backend; }

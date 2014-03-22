@@ -170,6 +170,8 @@ At the current moment, the math library is just GLM, as it has not been implemen
 
 ## Graphics
 
+The rojo graphics module is based significantly off of the OpenGL standard. It may be of your interest to learn how to use OpenGL, to understand how/why rojo does things in a specific way, but it is not required. 
+
 ### Dependices
 
 - rojo's Math Module
@@ -180,7 +182,7 @@ The API is composed of simple building blocks in order for other libraries/modul
 
 #### Graphics Backend
 
-In order to actually use the graphics module for pratical purposes, you require to have a graphics backend implemented and obviously link towards it. You can either create your own or use a pre-existing one (all pre-made backends are within the `rojo/graphics/backends/` directory). The currently avaliable backends are listed below:
+In order to actually use the graphics module for pratical purposes, you require to have a graphics backend implemented and obviously link towards it. You can either create your own or use a pre-existing one (all pre-made backends are within the `rojo/graphics/backends/` directory). The built-in backends are listed below:
 
 | Backend | Description|
 |:--------|:-----------|
@@ -222,19 +224,19 @@ You might be thinking:
 > my_device device;
 >
 > // this is quite a long line just to create a texture
-> texture_resource<ogl3_backend> texture = device.createTexture();
+> texture_resource<ogl3_backend> texture = device.create_texture();
 > ```
 
 Well this is not necessarily, for one, since this library is a C++11 library you can simply use the `auto` keyword to create a resource (by using your `graphics_device` to create your resource object). e.g.
 
 ```c++
-auto texture = device.createTexture();
+auto texture = device.create_texture();
 ``` 
 
-Of course this will not work for storing pointers/references to the resources. That is why there are typedef's associated within the `graphics_device` for each type of resource. The naming convention of these resource typedef's are the same within the table presented above (`texture`, `vertex_buffer`, etc.). e.g.
+Of course this will not work for storing pointers/references to the resources (unless you use `decltype`). That is why there are typedef's associated within the `graphics_device` for each type of resource. The naming convention of these resource typedef's are the same within the table presented above (`texture`, `vertex_buffer`, etc.). e.g.
 
 ```c++
-my_device::texture texture = device.createTexture();
+my_device::texture texture = device.create_texture();
 ``` 
 
 These typedef's are also handy to generically create a resource, via the `create<T>(Args&&...)` method within `graphics_device`. For instance:
@@ -242,6 +244,25 @@ These typedef's are also handy to generically create a resource, via the `create
 ```c++
 auto texture = device.create<my_device::texture>();
 ```
+
+##### Textures
+
+A texture object is described by the `rojo::texture_resource<GraphicsBackend>` class. As of the current version, only 2D textures are supported, and no multi-texturing (or mip-mapping as of yet).
+
+Textures are quite dependent on the `image_data` data structure, as this is what is used to upload texture information to the backend.
+
+To create a texture, you simple can call `create_texture(...)` from your graphics device. Like so:
+
+```c++
+auto texture = device.create_texture();
+```
+
+
+##### Buffers
+
+##### Shaders
+
+##### Programs (shader programs) 
 
 ### 2D Support
 
@@ -256,7 +277,7 @@ TODO
 As of the current moment, the audio library has not been implemented.
 
 # License
-Copyright (C) 2013 Miguel Martin (miguel.martin7.5@hotmail.com)
+Copyright (C) 2014 Miguel Martin (miguel.martin7.5@hotmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

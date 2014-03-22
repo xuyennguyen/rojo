@@ -41,7 +41,9 @@ namespace rojo
         void attach(const shader& sh)
         { backend().attach_shader(m_handle, sh.type(), sh.handle()); } 
         bool link()
-        { return backend().link(m_handle); }
+        { 
+            return backend().link(m_handle); 
+        }
 
         /// \note Must be called before link
         void bind_attribute(std::size_t location, const std::string& name)
@@ -49,10 +51,11 @@ namespace rojo
             backend().bind_attribute(m_handle, location, name);
         }
         
-        void use()
-        {
-            backend().use(m_handle);
-        }
+        void bind()
+        { assert(valid() && "Program is not valid"); backend().bind(m_handle); }
+
+        bool bound() const
+        { return backend().bound(m_backend); }
 
         graphics_backend& backend() const
         { return m_backend; }

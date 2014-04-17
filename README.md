@@ -4,12 +4,14 @@
 > 
 > rojo is still under heavy development, and cannot be used for production code.
 
-A cross-platform C++11 library that helps creating games and other graphical applications easier to write within C++.
+A cross-platform C++11 framework (collection of APIS), which aims to make creating games and other graphical applications easier to write within C++,
+by providing a common interface for hanlding graphics, audio and windows for all platforms (e.g. Mac and Windows) and implementations (e.g. DX and OpenGL).
 
 # Table of Contents
 
 <pre>
 <a href="#design-goals">Design Goals</a>
+<a href="#features">Features</a>
 <a href="#getting-started">Getting Started</a>
 	<a href="#downloading-the-library">Downloading the Library</a>
 	<a href="#supported-platforms">Supported Platforms</a>
@@ -47,6 +49,41 @@ A cross-platform C++11 library that helps creating games and other graphical app
 
 *some people writing C++ code seem to mis-use virtual functions, especially when the implementation of something should not change during run-time.
 
+# Features
+
+The features of this library are quite minimal. The rojo
+library is *not* a rendering engine, or any other sort of engine.
+It does not provide functionality to *load* 3D models into an application,
+images or any other asset. The rojo library doesn't even provide 
+an implementation of a scene-graph, particle renderer, "sprite" renderer (sprite batching that is),
+etc.
+
+What this library does provide, however, is a basic API that can wrap
+around other libraries with ease. This allows for a *common* interface
+for all implementations of it's features; these implementations can easily
+be changed by the user; depending on his/her preference. Here is a list
+of common interfaces rojo defines:
+
+- **Rendering**
+    - A common interface for rendering, using a graphics API. The rendering
+     module is based off of OpenGL, but may have multiple implementations,
+     such as a DX,
+- **Audio**
+    - A common interface for audio. The audio module is based off of OpenAL. 
+- **Windowing**
+    - A common interface for opening, displaying, and using windows.
+- **Context Creation** - TODO: Remove?
+    - A common interface for creating contexts for the audio and graphics modules.
+- **Math Library** - TODO: Remove?
+
+These features are split up into their own seperate "modules"; that is
+they are seperated into seperate directories, and they are independent of
+one another (although one module may depend on another). 
+
+> **NOTE:**
+>
+> There are "stock" implementations for each module (that provides a common interface).
+> This is done in order to save you time from writing your own backend for an interface.
 
 # Getting Started
 
@@ -56,7 +93,6 @@ There are multiple ways to download the library. Here are your options:
 
 - [clone] the repo: `git clone https://github.com/miguelishawt/rojo.git`
 - Download the library ([zip]/[tar-gz])
-
 
 ## Supported Platforms
 
@@ -69,10 +105,11 @@ The following platforms will be supported:
 - Windows
 - iOS
 
-> **NOTE:**
+> **NOTES:**
 >
-> OS X 10.9 will more than likely be the first operating system
+> 1. OS X 10.9 will more than likely be the first operating system
 > to be supported, as I develop directly from OS X 10.9.
+> 2. Android may be supported in the future
 
 
 ### Supported Rendering Backends
@@ -81,18 +118,16 @@ The following platforms will be supported:
 
 > **NOTES:**
 >
-> 1. These are just the rendering backends that are supported out of the box. 
-> 2. DirectX (and possibly other APIs) may be supported in the future.
+> 1. These are just the rendering backends that are supported out of the box, i.e. the "stock" rendering backends. 
+> 2. DirectX (and possibly other APIs) may be supported in the future (out of the box).
 
 ## Dependencies
 
-In order to build/use this library, it is reccomended that you use CMake to do so. As I am using CMake as a build system. It is possible to not use CMake, but it will make your life much harder.
-
-An updated compiler that supports C++11 features.
+In order to build/use this library, it is reccomended that you use CMake to do so. As I am using CMake as a build system. It is possible to not use CMake, but it will make your life much harder. Also, you should have an updated compiler, that supports the majority of the C++11 standard.
 
 ## Installation
 
-The library is mainly header-only, due to the use of templates. However, there are some parts of the library that are required to be compiled. The binaries produced by the build process can be configured within CMake, and are designated by `ROJO_BUILD_<X>` variables.
+The library is mainly header-only, due to the use of templates. However, there are some parts of the library that are required to be compiled. The binaries produced by the build process can be configured within CMake, and are designated by `ROJO_BUILD_<X>` variables (e.g. `ROJO_BUILD_OGL3_BACKEND` builds the OpenGL 3 graphics backend).
 
 It is reccomended that you setup the build system like so:
 
@@ -103,25 +138,29 @@ And then run CMake from the build directory, e.g.
      cd build
      ccmake ..
 
-From there you should setup your CMake configuration for however you wish to compile the library (e.g. installation path). Once configured, you can either manually install (e.g. `sudo make install`), or run the bash script `install.sh`. The install script will run change CMake's BUILD_TYPE variable (`CMAKE_BUILD_TYPE`) and the `BUILD_SHARED` variable, so that it builds both debug and release static and shared (dynamic) binaries.
-    
+From there you should setup your CMake configuration for however you wish to compile the library (e.g. installation path). Once configured, you can either manually install (e.g. `sudo make install`). Alternatively if you're on Linux/Mac, you can run the `install.sh` script, which will install the library for you. I reccomend setting up custom configuration in your `build` directory for CMake first; the install script runs CMake, but only changes the BUILD_TYPE variables (`CMAKE_BUILD_TYPE`) and the `BUILD_SHARED_LIBS`, so that is builds for both debug and release, static and shared (dynamic) binaries.
+
 # Using The Library
 
 ## Concepts
 
-This library heavily uses of what is known as concepts. As one of the design goals of this library is to use compile-time polymorphism whenever possible. A concept basically is just an interface that guarentees that certain methods are there.
+This library heavily uses of what is known as concepts. As one of the design goals of this library is to use compile-time polymorphism whenever possible. A concept basically is just an interface (in this case, an interface is defined in a class/struct) that guarentees that certain funtions are there.
 
 ## Naming conventions
 
 The naming conventions of the library is somewhat similiar to the standard library.
+If you would like to contribute to the library, plsease see the details within
+the `CONTRIBUTING.md` file.
 
 ## Binary naming conventions
+
+TODO: UPDATE
 
 The binraries produced from compiling this library follow the same pattern(s). 
 
 ### The "name" of the Binary
 
-The "name" of the binary is either defined by the module (e.g. `graphics` for the Graphics Module), or by the test-case or example name (e.g. `example_Teapot`)
+The "name" of the binary is either defined by what the binary provides (e.g. `ogl3_backend` for an OpenGL 3 graphics backend, used by the `graphics` module), or by the test-case or example name (e.g. `example_Teapot`)
 
 ### Binary Prefixes
 
@@ -164,11 +203,11 @@ The library is split up into various modules, which may even have multiple modul
 	- Dependencies
 	- API
 
-## Math
+## Math API
 
 At the current moment, the math library is just GLM, as it has not been implemented as of yet.
 
-## Graphics
+## Graphics API
 
 The rojo graphics module is based significantly off of the OpenGL standard. It may be of your interest to learn how to use OpenGL, to understand how/why rojo does things in a specific way, but it is not required. 
 
@@ -178,7 +217,7 @@ The rojo graphics module is based significantly off of the OpenGL standard. It m
 
 ### API
 
-The API is composed of simple building blocks in order for other libraries/modules to build upon. The API may be of what too low-level to be used directly.
+The API is composed of simple building blocks in order for other libraries/modules to build upon.
 
 #### Graphics Backend
 
@@ -277,7 +316,7 @@ TODO
 As of the current moment, the audio library has not been implemented.
 
 # License
-Copyright (C) 2014 Miguel Martin (miguel.martin7.5@hotmail.com)
+Copyright (C) 2014 Miguel Martin (miguel@miguel-martin.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
